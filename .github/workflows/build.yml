@@ -10,7 +10,7 @@ jobs:
         build_type: [Release]
         enable_ui: [on]
         include:
-          - os: windows-latest
+          - os: windows-latest
             build_type: Release
             enable_ui: on
     steps:
@@ -25,7 +25,7 @@ jobs:
     - uses: seanmiddleditch/gha-setup-ninja@master
     - uses: ilammy/msvc-dev-cmd@v1
       if: runner.os == 'Windows'
-  - name: Install Dependencies
+    - name: Install Dependencies
       shell: bash
       run: |
         if [[ "${{ runner.os }}" == "Linux" ]] ; then
@@ -43,7 +43,7 @@ jobs:
         fi
         curl -L https://github.com/blueloveTH/aseprite/releases/download/v0.01/skia.zip --output skia.zip
         7z x skia.zip
-        cmake -S . -B build -G Ninja \
+        cmake -S . -B build -G Ninja \
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} \
           -DENABLE_UI=${{ matrix.enable_ui }} \
           -DENABLE_CCACHE=$enable_ccache \
@@ -53,7 +53,7 @@ jobs:
           -DSKIA_LIBRARY=./skia/out/Release-x64/skia.lib
     - name: Compiling
       shell: bash
-      run: |
+      run: |
         cd build && ninja
     - uses: actions/upload-artifact@v3
       with:
